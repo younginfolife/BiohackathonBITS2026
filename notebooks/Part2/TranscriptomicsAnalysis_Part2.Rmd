@@ -2,7 +2,9 @@
 title: "Transcriptomics Data Analysis - Part 2"
 author: "Davide Bressan"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 
@@ -35,6 +37,8 @@ BiocManager::install("ComplexHeatmap")
 BiocManager::install("DESeq2")
 install.packages("ggplot2")
 install.packages("RColorBrewer")
+install.packages("ggrepel")
+
 ```
 
 Once the required R packages are installed, we can load them into our R session.
@@ -45,6 +49,7 @@ library(ComplexHeatmap)
 library(DESeq2)
 library(ggplot2)
 library(RColorBrewer)
+library(ggrepel)
 ```
 
 Once the required R packages are loaded, we can load the count matrix and the sample information from the pasilla dataset.
@@ -225,7 +230,7 @@ After applying the VST, we can check the variance-mean relationship again.
 
 ```{r}
 # Apply VST
-vst_counts <- vst(dds, blind = F)
+vst_counts <- DESeq2::vst(dds, blind = T)
 
 # VST counts mean expression Vs standard Deviation (SD)
 vst_mean <- rowMeans(assay(vst_counts))
@@ -265,9 +270,10 @@ percentVar <- round(100 * attr(pcaData, "percentVar"))
 ggplot(pcaData, aes(PC1, PC2, color=condition, shape=type)) +
   geom_point(size=3) +
   theme_bw() +
+  geom_text_repel(data = pcaData, aes(label = name)) + 
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
   ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
-  coord_fixed()
+  coord_fixed() 
 ```
 
 
@@ -295,11 +301,32 @@ Heatmap(sample_dist, name = "Dist", top_annotation = ha,
 
 Hierarchical clustering of the distance matrix should show that samples cluster according to their treatment condition, with the three knockdown replicates clustering together and the four control samples clustering together. However, we may also see some separation based on library type, which again suggests that this technical factor may be contributing to the variance in the data. 
 
+### 5.3 Heatmap of the most variable genes
+
+To further explore the data, we can create a heatmap of the most variable genes across the samples. This can help identify patterns of gene expression that differentiate the treatment groups.
+```{r}
+
+# Select the top 20 most variable genes
+topVarGenes <- head(order(rowVars(assay(vst_counts)), decreasing = TRUE), 20)
+
+# Create a heatmap of the top variable genes
+
+ha_VarGenes <- HeatmapAnnotation(df = as.data.frame(colData(dds)[, c("condition", "type")]),
+                        col = list(condition = c("untreated" = "#377eb8", "treated" = "#e41a1c"),
+                                   type = c("single-read" = "#4daf4a", "paired-end" = "#984ea3")))
+
+Heatmap(assay(vst_counts)[topVarGenes, ], name = "Expression", top_annotation = ha_VarGenes,
+        col = colorRampPalette(brewer.pal(9, "Blues"))(100))
 
 
 
+```
 
+We can see that the expression patterns of the top variable genes differentiate the treatment groups, with some genes being more expressed in the knockdown samples and others being less expressed. For instance, the fly gene sesB (FBgn0003360) appears to be less expressed in the knockdown samples compared to the controls, while Ant2 (FBgn0025111) becomes upregulated, in line with the paper (Figure 3A).
 
+However, we may also see some patterns that are associated with library type (FBgn0029856), which again suggests that this technical factor is contributing to the variance in the data.
+
+Note that to interpret the biological significance of these patterns, we would need to perform a differential expression analysis to identify which genes are significantly differentially expressed between the treatment groups. The analysis of the most variable genes is just an exploratory step to visualize the data and generate hypotheses for further investigation.
 
 
 
