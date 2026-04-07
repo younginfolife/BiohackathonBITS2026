@@ -3,8 +3,8 @@ title: "Transcriptomics Data Analysis - Part 2"
 author: "Davide Bressan"
 date: "`r Sys.Date()`"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 
