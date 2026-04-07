@@ -148,10 +148,10 @@ RUN mkdir -p /data/fastq \
              /notebooks \
     && chmod -R 777 /data /notebooks
 
-WORKDIR /notebooks
+WORKDIR /sharedFolder
 
 COPY notebooks/ /notebooks/
 
 EXPOSE 8888
 
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--notebook-dir=/notebooks", "--ServerApp.token=", "--ServerApp.password="]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--notebook-dir=/sharedFolder", "--ServerApp.token=", "--ServerApp.password="]
