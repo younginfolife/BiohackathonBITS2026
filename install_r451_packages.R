@@ -32,6 +32,7 @@ remotes::install_version(
   version = "0.9.8",
   repos = "https://cloud.r-project.org"
 )
+BiocManager::install("Rsubread", ask = FALSE, update = FALSE)
 cat("BiocManager: ", as.character(packageVersion("BiocManager")), "\n", sep = "")
 cat("ggplot2: ", as.character(packageVersion("ggplot2")), "\n", sep = "")
 cat("RColorBrewer: ", as.character(packageVersion("RColorBrewer")), "\n", sep = "")
