@@ -118,7 +118,7 @@ RUN cd /tmp \
 
 ENV R_HOME=/opt/R/4.5.1/lib/R
 ENV PATH=/opt/R/4.5.1/bin:${PATH}
-
+COPY install_r451_packages.R /tmp/
 RUN /opt/R/4.5.1/bin/Rscript /tmp/install_r451_packages.R \
     && rm -f /tmp/install_r451_packages.R
 
