@@ -154,4 +154,4 @@ COPY notebooks/ /notebooks/
 
 EXPOSE 8888
 
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--notebook-dir=/sharedFolder", "--ServerApp.token=", "--ServerApp.password="]
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--notebook-dir=/", "--ServerApp.token=", "--ServerApp.password="]
