@@ -1,4 +1,4 @@
-# 🧬 BioHackathon BITS 2026
+# BioHackathon BITS 2026
 
 **2° International BioHackathon of BITS** — Padova, May 26–27 2026
 
