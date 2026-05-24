@@ -16,8 +16,7 @@ This repository contains all the data and instructions needed to participate in 
 Clone this repository to get started:
 
 ```bash
-git clone <REPO_URL>
-cd BiohackathonBITS2026
+git clone https://github.com/younginfolife/BiohackathonBITS2026
 ```
 
 ---
