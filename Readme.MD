@@ -1,4 +1,4 @@
-# BioHackathon BITS 2026
+# 🧬 BioHackathon BITS 2026
 
 **2° International BioHackathon of BITS** — Padova, May 26–27 2026
 
@@ -16,7 +16,8 @@ This repository contains all the data and instructions needed to participate in 
 Clone this repository to get started:
 
 ```bash
-git clone https://github.com/younginfolife/BiohackathonBITS2026
+git clone <REPO_URL>
+cd BiohackathonBITS2026
 ```
 
 ---
@@ -89,18 +90,23 @@ You have **10 test datasets** to develop and validate your pipeline.
 
 Starting from gene expression data, you must develop a pipeline that infers the underlying gene regulatory network.
 
-The `Data/` folder contains expression matrices in TSV format, where rows are samples/perturbation experiments and columns are genes. Three experimental types are available: multifactorial, knockdowns, and knockouts.
+> ⚠️ The structure of this folder is **different** from the metagenomics one — read carefully.
 
-The `Gold standard/` folder contains the corresponding reference adjacency matrices (genes × genes, binary, symmetric), to be used to assess your results.
+The `Data/` folder contains expression matrices in **TSV format**, where rows are samples/perturbation experiments and columns are genes. Three experimental types are available: multifactorial, knockdowns, and knockouts. There is **not** a strict 1:1 correspondence between each file in `Data/` and a gold standard — multiple expression files (e.g. knockouts, knockdowns, multifactorial) can correspond to the same underlying network.
 
-The naming convention links datasets to their gold standard:
+The `Gold standard/` folder contains reference adjacency matrices (genes × genes, binary, symmetric). The network identifier in the filename (e.g. `_1_`, `_2_`) links a gold standard to the set of expression files that share the same identifier:
 
 ```
-Data/insilico_size100_1_multifactorial.tsv  →  Gold standard/insilico_size100_1_goldstandard_matrix.tsv
-Data/insilico_size100_2_knockdowns.tsv      →  Gold standard/insilico_size100_2_goldstandard_matrix.tsv
+Data/insilico_size100_1_multifactorial.tsv  ┐
+Data/insilico_size100_1_knockdowns.tsv      ├──→  Gold standard/insilico_size100_1_goldstandard_matrix.tsv
+Data/insilico_size100_1_knockouts.tsv       ┘
+
+Data/insilico_size100_2_multifactorial.tsv  ┐
+Data/insilico_size100_2_knockdowns.tsv      ├──→  Gold standard/insilico_size100_2_goldstandard_matrix.tsv
+Data/insilico_size100_2_knockouts.tsv       ┘
 ```
 
-You have **10 test datasets** to develop and validate your pipeline.
+You have **10 test datasets** (network topologies) to develop and validate your pipeline.
 
 ---
 
@@ -110,7 +116,7 @@ For both tasks, the required output is a **binary, symmetric adjacency matrix**.
 
 **Requirements:**
 
-- The file can be in any table-like format: `.csv`, `.tsv`, `.txt`, etc.
+- The file must be in **CSV format** (`.csv`)
 - The matrix must be **binary** (`1` = edge present, `0` = edge absent) and **symmetric**
 - Every **row and column must be named** after the corresponding taxon/gene, using the exact names from the input file (e.g. `TAXA_1`, `TAXA_2`, … or `G1`, `G2`, …)
 - Row/column order can differ from the input, but keeping the original order is appreciated
@@ -131,7 +137,7 @@ TAXA_3,0,1,0
 
 Each group will be evaluated **on both tasks** using evaluation datasets that are not included in this repository.
 
-Performance will be assessed using a combination of metrics (e.g. precision, recall, F1 score, AUROC). A balance across metrics is recommended — optimising for only one may penalise you on others.
+Performance will be assessed using metrics that will be communicated by the organizers. A balance between different aspects of network recovery is recommended.
 
 ---
 
@@ -142,7 +148,7 @@ Each group must submit the following for **each task**:
 1. **A Markdown file** describing the developed pipeline (methods, rationale, tools used)
 2. **The inferred adjacency matrices** for each evaluation dataset, following the output format described above
 
-> 📬 **Submission link:** `[TO BE ADDED]`
+> 📬 The submission link will be communicated by the organizers during the event.
 
 ---
 
@@ -150,12 +156,7 @@ Each group must submit the following for **each task**:
 
 In addition to your own laptop, each group has access to a **remote Virtual Machine (VM)** kindly provided by HPC4AI.
 
-> 🖥️ **VM access:** `[TO BE ADDED]`
->
-> **Instructions:**
-> ```
-> [TO BE ADDED — or see dedicated PDF if provided]
-> ```
+> 🖥️ VM access credentials and instructions will be provided directly by the organizers during the event.
 
 Each VM has pre-installed software, but participants are free to install any additional tools they need.
 
@@ -183,7 +184,7 @@ Each VM has pre-installed software, but participants are free to install any add
 | Option | Details |
 |--------|---------|
 | Eduroam | Use your institutional credentials |
-| Ad-hoc network | Network: `zona01-unipd` · Username: `BioHack2026` · Password: `[TO BE ADDED]` |
+| Ad-hoc network | Network: `zona01-unipd` · Username: `BioHack2026` · Password: *will be provided on site* |
 
 ---
 
